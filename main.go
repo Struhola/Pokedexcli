@@ -1,31 +1,41 @@
 package main
 
 import (
+	"Pokedexcli/internal/pokeapi"
+	"Pokedexcli/internal/pokecache"
 	"bufio"
 	"fmt"
 	"os"
+	"time"
 )
 
 func main() {
-	cfg := &cliConfig{}
-	commands := getCommands()
-	ui := bufio.NewScanner(os.Stdin)
+	pokeClient := pokeapi.NewClient(5*time.Second, pokecache.NewCache(5*time.Second))
+	cfg := &cliConfig{
+		pokeapiClient: pokeClient,
+	}
+	reader := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
-		ui.Scan()
-		words := cleanInput(ui.Text())
+		reader.Scan()
+
+		words := cleanInput(reader.Text())
 		if len(words) == 0 {
 			continue
 		}
-		ui_command := words[0]
-		sys_command, exists := commands[ui_command]
+
+		commandName := words[0]
+
+		command, exists := getCommands()[commandName]
 		if exists {
-			err := sys_command.callback(cfg)
+			err := command.callback(cfg)
 			if err != nil {
-				fmt.Printf("Error: %v\n", err)
+				fmt.Println(err)
 			}
+			continue
 		} else {
 			fmt.Println("Unknown command")
+			continue
 		}
 	}
 }
