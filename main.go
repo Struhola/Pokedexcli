@@ -7,6 +7,7 @@ import (
 )
 
 func main() {
+	cfg := &cliConfig{}
 	commands := getCommands()
 	ui := bufio.NewScanner(os.Stdin)
 	for {
@@ -19,7 +20,7 @@ func main() {
 		ui_command := words[0]
 		sys_command, exists := commands[ui_command]
 		if exists {
-			err := sys_command.callback()
+			err := sys_command.callback(cfg)
 			if err != nil {
 				fmt.Printf("Error: %v\n", err)
 			}
