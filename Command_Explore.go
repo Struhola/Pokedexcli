@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"path"
 )
 
 func commandExplore(cfg *cliConfig, args ...string) error {
@@ -17,8 +18,10 @@ func commandExplore(cfg *cliConfig, args ...string) error {
 	Explored_Area := fmt.Sprintf("%v. %s", locationResp.ID, locationResp.Name)
 	fmt.Printf("Exploring %v...\n", Explored_Area)
 	fmt.Printf("Found Pokemon:\n")
+	fmt.Printf("ID   | Name\n")
 	for _, Encounter := range locationResp.PokemonEncounters {
-		fmt.Println(Encounter.Pokemon.Name)
+		id := path.Base(Encounter.Pokemon.URL)
+		fmt.Printf("%-4v | %s\n", id, Encounter.Pokemon.Name)
 	}
 	return nil
 }

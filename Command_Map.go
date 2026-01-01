@@ -14,10 +14,11 @@ func commandMapf(cfg *cliConfig, args ...string) error {
 
 	cfg.nextLocationsURL = locationsResp.Next
 	cfg.prevLocationsURL = locationsResp.Previous
-
+	fmt.Printf("ID   | Name\n")
 	for _, loc := range locationsResp.Results {
 		id := path.Base(loc.URL)
-		fmt.Printf("%v. %s\n", id, loc.Name)
+		fmt.Printf("%-4v | %s\n", id, loc.Name)
+
 	}
 	return nil
 }
@@ -34,10 +35,10 @@ func commandMapb(cfg *cliConfig, args ...string) error {
 
 	cfg.nextLocationsURL = locationResp.Next
 	cfg.prevLocationsURL = locationResp.Previous
-
+	fmt.Printf("ID   | Name\n")
 	for _, loc := range locationResp.Results {
 		id := path.Base(loc.URL)
-		fmt.Printf("%v. %s\n", id, loc.Name)
+		fmt.Printf("%-4v| %s\n", id, loc.Name)
 	}
 	return nil
 }

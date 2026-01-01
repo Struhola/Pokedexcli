@@ -13,6 +13,7 @@ func main() {
 	pokeClient := pokeapi.NewClient(5*time.Second, pokecache.NewCache(5*time.Second))
 	cfg := &cliConfig{
 		pokeapiClient: pokeClient,
+		pokedex:       NewPokedex(),
 	}
 	reader := bufio.NewScanner(os.Stdin)
 	for {

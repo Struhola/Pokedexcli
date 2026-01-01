@@ -10,4 +10,5 @@ type cliConfig struct {
 	cache            pokecache.Cache
 	nextLocationsURL *string
 	prevLocationsURL *string
+	pokedex          *Pokedex
 }
